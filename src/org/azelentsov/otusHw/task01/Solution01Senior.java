@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.util.Arrays;
 
-public class solution01Senior implements BaseTask {
+public class Solution01Senior implements BaseTask {
     @Override
     public String run(String inputCase) {
         int n = Integer.parseInt(inputCase);
@@ -53,6 +53,6 @@ public class solution01Senior implements BaseTask {
 
 
 public static void main(String[] args) throws IOException {
-        BaseTest.runTest("/home/andrey/IdeaProjects/otus-alg-homework/src/org/azelentsov/otusHw/task01/1.Tickets",new solution01Senior());
+        BaseTest.runTest("/home/andrey/IdeaProjects/otus-alg-homework/src/org/azelentsov/otusHw/task01/1.Tickets",new Solution01Senior());
     }
 }
