@@ -33,7 +33,7 @@ public class solution01Senior implements BaseTask {
         for (int count = 0; count<=9; count++){
             results[count] = 1;
         }
-
+//      просчитываем коллличество возможных комбинаций для каждой возможной последней цифры. count=2 тк для первых двух уже рассчитано
         for (long count = 2; count<=n; count++){
 //            Общее количество чисел
             long maxS = count*9;
@@ -47,7 +47,8 @@ public class solution01Senior implements BaseTask {
             for (int ind = 0; ind<=maxS; ind++){
                 results[ind] = 0;
             }
-//            Выполняем главное действие - постепенно суммируем копируя значения из предыдущего результата
+//            Выполняем главное действие - постепенно суммируем значения
+//            maxT - последний индекс промежуточного числа, s- сдвиг, d - порядковый номер в комментарии
             for (int d=0; d<=9; d++){
                 for (int s = 0; s<= maxT; s++){
                     results[s+d] += digitsForSum[s];
