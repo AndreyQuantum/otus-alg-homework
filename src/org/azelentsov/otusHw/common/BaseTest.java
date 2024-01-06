@@ -12,10 +12,10 @@ public class BaseTest {
         while (true){
             try{
                 String inputData = Files.readString(Path.of(rootPathDirectory + "/test.%d.in".formatted(counter)));
-                String outputData = Files.readString(Path.of(rootPathDirectory + "/test.%d.out".formatted(counter)));
+                String outputData = Files.readString(Path.of(rootPathDirectory + "/test.%d.out".formatted(counter))).trim();
                 String taskResult = taskToTest.run(inputData);
                 boolean testResult = taskResult.equals(outputData);
-                System.out.printf("Test #%d:%b\n", counter, testResult);
+                System.out.printf("Test #%d:%s\n", counter, testResult ? "completed":"failed");
                 if (!testResult) {
                     System.out.printf("awaited %s, result is %s\n", outputData, taskResult);
                 }
