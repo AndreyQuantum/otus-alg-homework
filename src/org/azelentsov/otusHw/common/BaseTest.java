@@ -13,9 +13,12 @@ public class BaseTest {
             try{
                 String inputData = Files.readString(Path.of(rootPathDirectory + "/test.%d.in".formatted(counter)));
                 String outputData = Files.readString(Path.of(rootPathDirectory + "/test.%d.out".formatted(counter))).trim();
+                long startTime = System.nanoTime();
                 String taskResult = taskToTest.run(inputData);
+                long endTime = System.nanoTime();
+                double durationInMillis = (double)(endTime - startTime) / 1_000_000;
                 boolean testResult = taskResult.equals(outputData);
-                System.out.printf("Test #%d:%s\n", counter, testResult ? "completed":"failed");
+                System.out.printf("Test #%d:%s in %f ms\n", counter, testResult ? "completed":"failed", durationInMillis);
                 if (!testResult) {
                     System.out.printf("awaited %s, result is %s\n", outputData, taskResult);
                 }
