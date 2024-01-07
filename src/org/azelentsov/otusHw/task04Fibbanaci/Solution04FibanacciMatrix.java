@@ -36,6 +36,6 @@ public class Solution04FibanacciMatrix {
 
     }
     public static void main(String[] args) {
-        System.out.println(calculate(3));
+        System.out.println(calculate(17));
     }
 }
