@@ -27,8 +27,7 @@ public class Solution03Razlozhenje {
 //        System.out.println(test.run("123456789\r\n" +
 //                "0\n"));
 //        System.out.println(test.run(2,10));
-        System.out.println(Solution03Razlozhenje.run(0.99,365));                                                                                                                                                                                                                                                                           ));
-
+        System.out.println(Solution03Razlozhenje.run(0.99,365));
 //        System.out.println(test.run("2\r\n" +
 //                "100\n"));
 //        BaseTest.runTest("/home/andrey/IdeaProjects/otus-alg-homework/src/org/azelentsov/otusHw/task03Power/3.Power",new Solution03Razlozhenje());
