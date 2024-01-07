@@ -1,4 +1,4 @@
-package org.azelentsov.otusHw.task03Power;
+package org.azelentsov.otusHw.task04Fibbanaci;
 
 public class Solution04FibanacciBine {
 
