@@ -40,8 +40,8 @@ public class Solution03Domnozhenije implements BaseTask {
 
 public static void main(String[] args) throws IOException {
         var test = new Solution03Domnozhenije();
-//    System.out.println(test.run("123456789\r\n" +
-//                "0\n"));
-        BaseTest.runTest("/home/andrey/IdeaProjects/otus-alg-homework/src/org/azelentsov/otusHw/task03Power/3.Power",new Solution03Domnozhenije());
+    System.out.println(test.run("2\r\n" +
+                "4\n"));
+//        BaseTest.runTest("/home/andrey/IdeaProjects/otus-alg-homework/src/org/azelentsov/otusHw/task03Power/3.Power",new Solution03Domnozhenije());
     }
 }
