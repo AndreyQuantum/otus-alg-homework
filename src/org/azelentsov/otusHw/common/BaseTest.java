@@ -11,7 +11,7 @@ public class BaseTest {
         int counter = 0;
         while (true){
             try{
-                String inputData = Files.readString(Path.of(rootPathDirectory + "/test.%d.in".formatted(counter)));
+                String inputData = Files.readString(Path.of(rootPathDirectory + "/test.%d.in".formatted(counter))).trim();
                 String outputData = Files.readString(Path.of(rootPathDirectory + "/test.%d.out".formatted(counter))).trim();
                 long startTime = System.nanoTime();
                 String taskResult = taskToTest.run(inputData);
