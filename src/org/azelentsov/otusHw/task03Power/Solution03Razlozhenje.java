@@ -8,24 +8,18 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 public class Solution03Razlozhenje {
-    public String run(double number, double power) {
-        if (power == 0) {
-            return "1.0";
-        }
-        if (power == 1){
-            return Double.toString(number);
-        }
+    public double run(double number, int power) {
         double result = 1;
-        double numberToMultiply = 1;
-        for (; power >= 1; power /= 2) {
-            numberToMultiply*=number;
-            if (power % 2 > 0) {
-                result *= numberToMultiply;
+
+        while (power>=1){
+            if (power % 2 >0){
+                result *= number;
             }
-
+            power /= 2;
+            number *=number;
         }
-        return Double.toString(result);
 
+        return result;
     }
 
 
@@ -34,7 +28,7 @@ public class Solution03Razlozhenje {
 //        System.out.println(test.run("123456789\r\n" +
 //                "0\n"));
 //        System.out.println(test.run(2,10));
-        System.out.println(test.run(2,5));
+        System.out.println(test.run(2,10                                                                                                                                                                                                                                                                                                                    ));
 
 //        System.out.println(test.run("2\r\n" +
 //                "100\n"));
