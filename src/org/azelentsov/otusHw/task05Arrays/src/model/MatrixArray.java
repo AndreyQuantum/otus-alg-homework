@@ -36,11 +36,24 @@ public class MatrixArray<T> implements IArray<T> {
 
     @Override
     public void add(T item, int index) {
+        if (size == array.size() * vector)
+            array.add(new VectorArray<T>(vector));
 
     }
 
+
     @Override
     public T remove(int index) {
-        return null;
+//        Удаляем элемент
+        T elementToRemove = array.get(index/vector).remove(index%vector);
+//        Переносим нулевой элемент следующей строки вместо последнего элемента предыдущей
+        for (int currentRowIndex = index/vector+1; currentRowIndex < array.size(); currentRowIndex++){
+            var currentRow = array.get(currentRowIndex);
+            var previousRow = array.get(currentRowIndex-1);
+            previousRow.add(currentRow.get(0), previousRow.size());
+            currentRow.remove(0);
+        }
+        size--;
+        return elementToRemove;
     }
 }
