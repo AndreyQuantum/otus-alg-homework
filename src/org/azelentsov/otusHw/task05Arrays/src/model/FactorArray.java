@@ -20,6 +20,9 @@ public class FactorArray<T> implements IArray<T> {
     public int size() {
         return size;
     }
+    public int length() {
+        return array.length;
+    }
 
     @Override
     public void add(T item) {
@@ -41,8 +44,42 @@ public class FactorArray<T> implements IArray<T> {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public T remove(int index) {
-        return null;
+        T objectToRemove = (T) array[index];
+//        Если количество элементов в будущем массиве будет равно количеству элементов которое мы можем хранить
+//        в массиве до увеличения массива, то тогда создаем массив поменьше и копируем в него данные из старого
+//        массива, за исключения индекса, который надо удалить
+        if (size()-1 == Math.round((100*array.length)/(factor+100)) && array.length  >=10){
+            int futureCapacity = Math.round((100*array.length)/(factor+100));
+            Object[] newArray = new Object[futureCapacity];
+            System.arraycopy(array, 0, newArray, 0, index);
+            System.arraycopy(array, index+1, newArray, index, index-2);
+            array = newArray;
+        } else {
+//            иначе с удаляемого индекса перетаскиваем элементы в перед на 1 позицию
+            for (int i = index; i< size(); i++){
+                array[i] = array[i+1];
+            }
+        }
+        size--;
+        System.out.println(array.length);
+
+
+        return objectToRemove;
+    }
+
+    public String toString(){
+        StringBuilder builder = new StringBuilder();
+        builder.append('[');
+        for (int i = 0; i<size(); i++){
+            builder.append(array[i]);
+            if (i != size()-1){
+                builder.append(" ,");
+            }
+        }
+        builder.append(']');
+        return builder.toString();
     }
 
     private void resize() {
