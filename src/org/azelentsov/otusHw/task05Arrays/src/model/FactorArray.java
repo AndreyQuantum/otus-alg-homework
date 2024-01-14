@@ -40,7 +40,13 @@ public class FactorArray<T> implements IArray<T> {
 
     @Override
     public void add(T item, int index) {
-
+        if (size() == array.length)
+            resize();
+        for (int i = size(); i > index; i--){
+            array[i]=array[i-1];
+        }
+        array[index] = item;
+        size++;
     }
 
     @Override
@@ -57,7 +63,7 @@ public class FactorArray<T> implements IArray<T> {
             System.arraycopy(array, index+1, newArray, index, index-2);
             array = newArray;
         } else {
-//            иначе с удаляемого индекса перетаскиваем элементы в перед на 1 позицию
+//            иначе с удаляемого индекса перетаскиваем элементы назад на 1 позицию
             for (int i = index; i< size(); i++){
                 array[i] = array[i+1];
             }

@@ -21,13 +21,13 @@ public class Program {
         for (int j=0; j<= 12; j++){
             data.add(j);
         }
-//        data.add(1_000, 4);
+        data.add(1_000, 4);
 
 
 //        for (int j = 0; j < total; j ++)
 //            data.add(new Date());
 
-        data.remove(6);
+//        data.remove(6);
 
         System.out.println(data + " testAddArray: " +
                 (System.currentTimeMillis() - start));
