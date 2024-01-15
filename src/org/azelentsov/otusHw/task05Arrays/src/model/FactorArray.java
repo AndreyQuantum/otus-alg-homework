@@ -69,7 +69,6 @@ public class FactorArray<T> implements IArray<T> {
             }
         }
         size--;
-        System.out.println(array.length);
 
 
         return objectToRemove;
