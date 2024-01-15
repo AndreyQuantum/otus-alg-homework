@@ -75,18 +75,18 @@ public class FactorArray<T> implements IArray<T> {
         return objectToRemove;
     }
 
-    public String toString(){
-        StringBuilder builder = new StringBuilder();
-        builder.append('[');
-        for (int i = 0; i<size(); i++){
-            builder.append(array[i]);
-            if (i != size()-1){
-                builder.append(" ,");
-            }
-        }
-        builder.append(']');
-        return builder.toString();
-    }
+//    public String toString(){
+//        StringBuilder builder = new StringBuilder();
+//        builder.append('[');
+//        for (int i = 0; i<size(); i++){
+//            builder.append(array[i]);
+//            if (i != size()-1){
+//                builder.append(" ,");
+//            }
+//        }
+//        builder.append(']');
+//        return builder.toString();
+//    }
 
     private void resize() {
         Object[] newArray = new Object[array.length + array.length * factor / 100];

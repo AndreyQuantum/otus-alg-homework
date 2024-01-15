@@ -6,18 +6,18 @@ public class VectorArray<T> implements IArray<T> {
     private int vector;
     private int size;
 
-    public String toString(){
-        StringBuilder builder = new StringBuilder();
-        builder.append('[');
-        for (int i = 0; i<size(); i++){
-            builder.append(array[i]);
-            if (i != size()-1){
-                builder.append(" ,");
-            }
-        }
-        builder.append(']');
-        return builder.toString();
-    }
+//    public String toString(){
+//        StringBuilder builder = new StringBuilder();
+//        builder.append('[');
+//        for (int i = 0; i<size(); i++){
+//            builder.append(array[i]);
+//            if (i != size()-1){
+//                builder.append(" ,");
+//            }
+//        }
+//        builder.append(']');
+//        return builder.toString();
+//    }
 
     @Override
     public T remove(int index) {
