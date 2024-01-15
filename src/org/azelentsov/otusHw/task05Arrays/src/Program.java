@@ -32,8 +32,16 @@ public class Program {
         testAddByIndexArray(matrixArray);
         testAddByIndexArray(arrayList);
 
+        testQueue(new PriorityQueue<Integer>());
     }
 
+    private static void testQueue(PriorityQueue data){
+        data.enqueue(5,100);
+        data.enqueue(10,1000);
+
+        System.out.println(data.dequeue(5));
+        System.out.println(data.dequeue(10));
+    }
     private static void testAddByIndexArray(IArray data){
         long start = System.nanoTime();
 
