@@ -38,7 +38,16 @@ public class MatrixArray<T> implements IArray<T> {
     public void add(T item, int index) {
         if (size == array.size() * vector)
             array.add(new VectorArray<T>(vector));
-
+//        Добавляем элемент в нужную строку
+        array.get(index/vector).add(item, index % vector);
+//        Переносим последний элемент из предыдущей строки в 0 позицию следующего
+        for (int currentRowIndex = index/vector+1; currentRowIndex < array.size(); currentRowIndex++){
+            var currentRow = array.get(currentRowIndex);
+            var previousRow = array.get(currentRowIndex-1);
+            currentRow.add(previousRow.get(previousRow.size()-1),0);
+            previousRow.remove(previousRow.size());
+        }
+        size++;
     }
 
 
