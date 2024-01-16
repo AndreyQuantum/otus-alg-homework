@@ -8,14 +8,13 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 public class Solution03Razlozhenje {
-    public static double run(double number, int power) {
+    public static double run(double number, long power) {
         double result = 1;
 
-        while (power>=1){
-            if (power % 2 >0){
+        for (;power > 0; power=power >>1){
+            if ((power & 1) == 1){
                 result *= number;
             }
-            power /= 2;
             number *=number;
         }
 
@@ -27,7 +26,7 @@ public class Solution03Razlozhenje {
 //        System.out.println(test.run("123456789\r\n" +
 //                "0\n"));
 //        System.out.println(test.run(2,10));
-        System.out.println(Solution03Razlozhenje.run(0.99,365));
+        System.out.println(Solution03Razlozhenje.run(2,7));
 //        System.out.println(test.run("2\r\n" +
 //                "100\n"));
 //        BaseTest.runTest("/home/andrey/IdeaProjects/otus-alg-homework/src/org/azelentsov/otusHw/task03Power/3.Power",new Solution03Razlozhenje());
