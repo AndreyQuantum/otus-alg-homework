@@ -2,6 +2,8 @@ package org.azelentsov.otusHw.task08BubbleSort;
 
 import org.azelentsov.otusHw.common.BaseSort;
 
+import javax.naming.spi.StateFactory;
+
 public class Solution08BubbleSort extends BaseSort {
 
 
@@ -11,11 +13,29 @@ public class Solution08BubbleSort extends BaseSort {
 
     @Override
     protected void sort(){
+        optimized();
+    }
+
+    private void standart(){
         for (int endPointer = arrayToSort.length; endPointer>1; endPointer--){
             for (int currentIndex=1; currentIndex< endPointer; currentIndex++){
                 if (arrayToSort[currentIndex-1] > arrayToSort[currentIndex]){
                     swap(currentIndex-1, currentIndex);
                 }
+            }
+        }
+    }
+    private void optimized(){
+        for (int endPointer = arrayToSort.length; endPointer>1; endPointer--){
+            boolean isNotSwapped = true;
+            for (int currentIndex=1; currentIndex< endPointer; currentIndex++){
+                if (arrayToSort[currentIndex-1] > arrayToSort[currentIndex]){
+                    swap(currentIndex-1, currentIndex);
+                    isNotSwapped = false;
+                }
+            }
+            if (isNotSwapped){
+                break;
             }
         }
     }
