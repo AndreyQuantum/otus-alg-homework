@@ -9,11 +9,11 @@ public class Solution10ShellSort extends BaseSort {
     }
 
     private int gapCalculate(int currentGap){
-        return calculateKnuthGap(currentGap);
+        return calculateHibbardsGap(currentGap);
     }
 
-    private int calculateFrankLazarusGap(int currentGap){
-        return arrayToSort.length/(2^currentGap)-1;
+    private int calculateHibbardsGap(int currentGap){
+        return  2^currentGap - 1;
     }
 
     private int calculateKnuthGap(int currentGap){
