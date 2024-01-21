@@ -1,9 +1,6 @@
 package org.azelentsov.otusHw.task08BubbleSort;
 
 import org.azelentsov.otusHw.common.BaseSort;
-import org.azelentsov.otusHw.common.BaseTask;
-
-import java.util.Arrays;
 
 public class Solution08BubbleSort extends BaseSort {
 
@@ -23,11 +20,6 @@ public class Solution08BubbleSort extends BaseSort {
         }
     }
 
-    private void swap(int indexA, int indexB){
-        int temp = arrayToSort[indexA];
-        arrayToSort[indexA] = arrayToSort[indexB];
-        arrayToSort[indexB] = temp;
-    }
 
     public static void main(String[] args) {
         System.out.println("Element count \t elapsed time");

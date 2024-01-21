@@ -16,12 +16,19 @@ public class BaseSort{
             arrayToSort[i] = random.nextInt(0,100);
         }
     }
+//    Базовые операции, которые применяются в алгоритмах сортировки
+    protected void swap(int indexA, int indexB){
+        int temp = arrayToSort[indexA];
+        arrayToSort[indexA] = arrayToSort[indexB];
+        arrayToSort[indexB] = temp;
+    }
+
 
 
     public void run(){
         var  startTime = System.currentTimeMillis();
         sort();
         var elapsedTime = System.currentTimeMillis() - startTime;
-        System.out.println( arrayToSort.length + " -> " + elapsedTime + "ms");
+        System.out.println( arrayToSort.length + "\t" + elapsedTime + "ms");
     }
 }
