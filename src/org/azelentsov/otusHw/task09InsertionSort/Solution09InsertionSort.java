@@ -1,16 +1,17 @@
 package org.azelentsov.otusHw.task09InsertionSort;
 
 import org.azelentsov.otusHw.common.BaseSort;
+import org.azelentsov.otusHw.task08BubbleSort.Solution08BubbleSort;
 
-public class Solution09SelectionSort extends BaseSort {
+public class Solution09InsertionSort extends BaseSort {
 
-    public Solution09SelectionSort(int lengthOfArray){
+    public Solution09InsertionSort(int lengthOfArray){
         populateArray(lengthOfArray);
     }
 
     @Override
     protected void sort(){
-        shiftingBinarySearch();
+        shifting();
         }
 
     private void swapping(){
@@ -65,8 +66,8 @@ public class Solution09SelectionSort extends BaseSort {
 
     public static void main(String[] args) {
         System.out.println("Element count \t elapsed time");
-        for (int N = 10; N<=1_000_000; N *= 10){
-            var bubbleTest = new Solution09SelectionSort(N);
+        for (int N = 10; N<=1_000_000; N*=10){
+            var bubbleTest = new Solution09InsertionSort(N);
             bubbleTest.run();
         }
     }

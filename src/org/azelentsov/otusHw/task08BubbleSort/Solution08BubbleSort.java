@@ -43,7 +43,7 @@ public class Solution08BubbleSort extends BaseSort {
 
     public static void main(String[] args) {
         System.out.println("Element count \t elapsed time");
-        for (int N = 10; N<=1_000_000; N *= 10){
+        for (int N = 10; N<=1_000_000; N*=10){
             var bubbleTest = new Solution08BubbleSort(N);
             bubbleTest.run();
         }

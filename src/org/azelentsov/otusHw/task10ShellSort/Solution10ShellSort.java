@@ -1,7 +1,6 @@
 package org.azelentsov.otusHw.task10ShellSort;
 
 import org.azelentsov.otusHw.common.BaseSort;
-import org.azelentsov.otusHw.task09InsertionSort.Solution09SelectionSort;
 
 public class Solution10ShellSort extends BaseSort {
 
@@ -10,7 +9,15 @@ public class Solution10ShellSort extends BaseSort {
     }
 
     private int gapCalculate(int currentGap){
-        return currentGap/2;
+        return calculateKnuthGap(currentGap);
+    }
+
+    private int calculateFrankLazarusGap(int currentGap){
+        return arrayToSort.length/(2^currentGap)-1;
+    }
+
+    private int calculateKnuthGap(int currentGap){
+        return (3^currentGap-1)/2;
     }
 
     @Override
@@ -26,7 +33,7 @@ public class Solution10ShellSort extends BaseSort {
 
     public static void main(String[] args) {
         System.out.println("Element count \t elapsed time");
-        for (int N = 10; N<=1_000_000_000; N *= 10){
+        for (int N = 10; N<=1_000_000_000; N*=10){
             var bubbleTest = new Solution10ShellSort(N);
             bubbleTest.run();
         }
