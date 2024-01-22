@@ -8,16 +8,17 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 public class Solution03Razlozhenje {
-    public static double run(double number, long power) {
-        double result = 1;
-
-        for (;power > 0; power=power >>1){
-            if ((power & 1) == 1){
-                result *= number;
-            }
-            number *=number;
+    public static double run(double x, int n) {
+        double result=1;
+        if (n<0){
+            x=1/x;
         }
-
+        for (; n != 0; n/=2){
+            if (n % 2==1||n % 2==-1){
+                result*=x;
+            }
+            x*=x;
+        }
         return result;
     }
 

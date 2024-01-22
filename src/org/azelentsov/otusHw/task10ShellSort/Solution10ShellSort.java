@@ -20,6 +20,9 @@ public class Solution10ShellSort extends BaseSort {
         return (3^currentGap-1)/2;
     }
 
+    private int calculateSedgewickGap(int currentGap){
+        return 4^currentGap+3*2^(currentGap-1)+1;
+    }
     @Override
     protected void sort(){
         for (int gap = gapCalculate(arrayToSort.length); gap>0; gap = gapCalculate(gap)){
