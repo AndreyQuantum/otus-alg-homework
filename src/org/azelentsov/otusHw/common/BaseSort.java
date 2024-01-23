@@ -29,6 +29,13 @@ public class BaseSort{
         var  startTime = System.currentTimeMillis();
         sort();
         var elapsedTime = System.currentTimeMillis() - startTime;
-        System.out.println( arrayToSort.length + "\t" + elapsedTime + "ms");
+        String lengthToDisplay = Integer.toString(arrayToSort.length);
+        if (arrayToSort.length % 1000 == 0 && arrayToSort.length /1000 <= 100){
+            lengthToDisplay = Integer.toString((int)(arrayToSort.length /1000)) + " T";
+        }
+        if (arrayToSort.length % 1_000_000 == 0 && arrayToSort.length /1_000_000 <= 100){
+            lengthToDisplay = Integer.toString((int)(arrayToSort.length /1_000_000)) + " M";
+        }
+        System.out.println( lengthToDisplay + "\t" + elapsedTime + "ms");
     }
 }
