@@ -1,23 +1,18 @@
 package org.azelentsov.otusHw.task13QuickSort;
 
 import org.azelentsov.otusHw.common.BaseSort;
-import org.azelentsov.otusHw.task12HeapSort.Solution12HeapSort;
 
-import java.util.Arrays;
-
-public class solution13QuickSort extends BaseSort {
+public class Solution13QuickSort extends BaseSort {
     private final int N;
 
-    public solution13QuickSort(int arrayLength) {
+    public Solution13QuickSort(int arrayLength) {
         populateArray(arrayLength);
         N = arrayLength;
     }
 
     @Override
     protected void sort() {
-        System.out.println();
         quickSort(0, N - 1);
-        System.out.println();
     }
 
     private void quickSort(int l, int r) {
@@ -32,12 +27,12 @@ public class solution13QuickSort extends BaseSort {
 
     private int split(int l, int r) {
 /*     Идея - делим алгоритм на 3 части:
-        1)  Часть, меньшая опорного эл-та
+        1) Часть, меньшая опорного эл-та
         2) Часть больше опорного эл-та
         3) Неотсортированная часть массива
         Увеличиваем постоянно неотсортированную часть, если первый эл-т неотсортированной
         части меньше опорного эл-та, тогда свапаем последний элемент меньшей части и увеличиваем
-        границу меньшей части ан 1
+        границу меньшей части на 1
         */
         int pivotIndex = r;
         int lastLowerPartIndex = l-1;
@@ -52,7 +47,7 @@ public class solution13QuickSort extends BaseSort {
     public static void main(String[] args) {
         System.out.println("Element count \t elapsed time");
         for (int N = 10; N <= 1_000_000_000; N *= 10) {
-            var bubbleTest = new solution13QuickSort(N);
+            var bubbleTest = new Solution13QuickSort(N);
             bubbleTest.run();
         }
     }
