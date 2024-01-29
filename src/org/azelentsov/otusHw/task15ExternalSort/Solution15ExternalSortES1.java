@@ -19,7 +19,7 @@ public class Solution15ExternalSortES1 extends BaseSort {
 
     private final Path fileToSortName = Paths.get("allNumbers.txt");
 
-    private final List<Path> tempFilesToSort = new ArrayList<>();
+    private List<Path> tempFilesToSort = new ArrayList<>();
 
 
     private void generateTextFile(int rowCount, int maxNumber) {
@@ -64,72 +64,99 @@ public class Solution15ExternalSortES1 extends BaseSort {
         }
     }
 
+    private void fileUnionToFirstFile(Path fileToWrite1, Path fileToWrite2, Path fileToRead){
+        try (var writer1 = new BufferedWriter(new FileWriter(fileToWrite1.toFile(),true));
+            var writer2 = new BufferedWriter(new FileWriter(fileToWrite2.toFile(), true));
+             var reader1 = new BufferedReader(new FileReader(fileToRead.toFile()))){
+            while (reader1.ready()){
+                writer1.write(reader1.readLine());
+                writer1.newLine();
+                writer2.write(reader1.readLine());
+                writer2.newLine();
+            }
+
+        } catch (Exception e){
+            throw new RuntimeException(e);
+        }
+    }
+
     private void mergeFileSort() throws Exception{
         /*
         Выполняем чтение двух файлов, сортировку прочитанных чисел и запись с удалением второго файла
          */
-        for (int currentPosition = 0; currentPosition < tempFilesToSort.size()-1; currentPosition += 2){
-            List<Integer> currentArray = new ArrayList<>();
-            Path nextFile = tempFilesToSort.get(currentPosition + 1);
+        List<Path> nextTempPathList = new ArrayList<>();
+        int currentPosition = 0;
+        for (; currentPosition < tempFilesToSort.size()-1; currentPosition += 2){
             Path currentFile = tempFilesToSort.get(currentPosition);
-            try (var reader1 = new BufferedReader(new FileReader(currentFile.toFile()));
-                 var reader2 = new BufferedReader(new FileReader(nextFile.toFile()))){
-                while (reader1.ready()){
-                    currentArray.add(Integer.parseInt(reader1.readLine()));
-                }
-                while (reader2.ready()){
-                    currentArray.add(Integer.parseInt(reader2.readLine()));
-                }
-                mergeSort(currentArray, 0, currentArray.size()-1);
+            Path nextFile = tempFilesToSort.get(currentPosition + 1);
+            if (currentPosition + 3 == tempFilesToSort.size()){
+                System.out.println("сработало");
+                fileUnionToFirstFile(currentFile, nextFile, tempFilesToSort.get(currentPosition+2));
             }
-            try (var writer = new BufferedWriter(new FileWriter(currentFile.toFile()))){
-                for (Integer element : currentArray){
-                    writer.write(element.toString());
-                    writer.newLine();
-                }
+            Path resultTempFile = Files.createTempFile(Integer.toString(nextTempPathList.size()-1),"_");
+            sortElementBetweenFiles(currentFile, nextFile, resultTempFile);
+            nextTempPathList.add(resultTempFile);
+        }
+        System.out.println("-----------------");
+        System.out.println(tempFilesToSort);
+        for (int i = 0; i < tempFilesToSort.size(); i++){
+            var reader = new BufferedReader(new FileReader(tempFilesToSort.get(i).toFile()));
+            while (reader.ready()){
+                System.out.println(reader.readLine());
             }
-            Files.delete(nextFile);
-            tempFilesToSort.remove(currentPosition+1);
+            reader.close();
+            System.out.println("-");
         }
-    }
-    private void mergeSort(List<Integer> arrayToSort, int l, int r) {
-        if (l>=r) return;
-        int middleIndex = (l+r)/2;
-        mergeSort(arrayToSort, l, middleIndex);
-        mergeSort(arrayToSort, middleIndex+1,r);
-        merge(arrayToSort, l,middleIndex,r);
-    }
-
-    private void merge(List<Integer> arrayToSort, int l, int m, int r){
-        int[] sortedArray = new int[r - l + 1];
-        int firstHalfIndex = l;
-        int secondHalfIndex = m + 1;
-        int createdArrayCurrentPoint = 0;
-        while (firstHalfIndex <= m && secondHalfIndex <= r){
-            if (arrayToSort.get(firstHalfIndex) >= arrayToSort.get(secondHalfIndex)){
-                sortedArray[createdArrayCurrentPoint++] = arrayToSort.get(secondHalfIndex++);
-            } else {
-                sortedArray[createdArrayCurrentPoint++] = arrayToSort.get(firstHalfIndex++);
+        System.out.println(currentPosition);
+        System.out.println("tempPath");
+        System.out.println(nextTempPathList);
+        for (int i = 0; i < nextTempPathList.size(); i++){
+            var reader = new BufferedReader(new FileReader(nextTempPathList.get(i).toFile()));
+            while (reader.ready()){
+                System.out.println(reader.readLine());
             }
+            reader.close();
+            System.out.println("-");
         }
-        while (firstHalfIndex <= m){
-            sortedArray[createdArrayCurrentPoint++] = arrayToSort.get(firstHalfIndex++);
-        }
-        while (secondHalfIndex <= r){
-            sortedArray[createdArrayCurrentPoint++] = arrayToSort.get(secondHalfIndex++);
-
-        }
-        for (int i = l; i <= r; i++ ){
-            arrayToSort.set(i, sortedArray[i - l]);
-        }
+        tempFilesToSort = nextTempPathList;
     }
 
+    private void sortElementBetweenFiles(Path currentFile, Path nextFile, Path resultTempFile) throws IOException {
+        try (var reader1 = new BufferedReader(new FileReader(currentFile.toFile()));
+             var reader2 = new BufferedReader(new FileReader(nextFile.toFile()));
+             var resultWriter = new BufferedWriter(new FileWriter(resultTempFile.toFile(), false))){
+            while (reader1.ready() || reader2.ready()){
+                if (!reader1.ready()){
+                    resultWriter.write(reader2.readLine());
+                    resultWriter.newLine();
+                    continue;
+                }
+                if (!reader2.ready()){
+                    resultWriter.write(reader1.readLine());
+                    resultWriter.newLine();
+                    continue;
+                }
+                int[] tempResultArray = new int[]{Integer.parseInt(reader1.readLine()), Integer.parseInt(reader2.readLine())};
+                if (tempResultArray[0] <= tempResultArray[1]){
+                    for (int result : tempResultArray){
+                        resultWriter.write(Integer.toString(result));
+                        resultWriter.newLine();
+                    }
+                } else {
+                    for (int i = tempResultArray.length-1; i >=0; i--){
+                        resultWriter.write(Integer.toString(tempResultArray[i]));
+                        resultWriter.newLine();
+                    }
+                }
+            }
+        }
+    }
 
 
     public static void main(String[] args) throws IOException {
 
         System.out.println("Element count \t elapsed time");
-        for (int N = 10; N <= 1_000_000; N *= 10) {
+        for (int N = 10; N <= 10; N *= 10) {
             var testObject = new Solution15ExternalSortES1(N, N);
             testObject.run();
         }
