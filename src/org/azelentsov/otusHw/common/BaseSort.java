@@ -16,6 +16,13 @@ public class BaseSort{
             arrayToSort[i] = random.nextInt(0,100);
         }
     }
+    protected void populateArray(int length, int maxNumber){
+        arrayToSort = new int[length];
+        Random random = new Random(12345);
+        for (int i = 0; i<= length-1; i++){
+            arrayToSort[i] = random.nextInt(0,maxNumber);
+        }
+    }
 //    Базовые операции, которые применяются в алгоритмах сортировки
     protected void swap(int indexA, int indexB){
         int temp = arrayToSort[indexA];
