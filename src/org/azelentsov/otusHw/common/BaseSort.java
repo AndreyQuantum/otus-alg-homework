@@ -30,6 +30,16 @@ public class BaseSort{
         arrayToSort[indexB] = temp;
     }
 
+    protected int findMax(int[] array){
+        int max = array[0];
+        for (int a: array){
+            if (a > max){
+                max = a;
+            }
+        }
+        return max;
+    }
+
 
 
     public void run(){

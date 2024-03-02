@@ -4,10 +4,6 @@ import org.azelentsov.otusHw.common.BaseSort;
 import org.azelentsov.otusHw.common.SortLinkedList;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
 
 public class Solution16BucketSort extends BaseSort {
 
@@ -18,44 +14,41 @@ public class Solution16BucketSort extends BaseSort {
 
     protected void sort() {
 //        находим максимальный элемент
-        int max = arrayToSort[0];
-        for (int a: arrayToSort){
-            if (a > max){
-                max = a;
-            }
-        }
+        int max = findMax(arrayToSort);
+
 //        увеличиваем максильный элемент на 1 чтобы потом выполнять сразу деление
         max++;
         SortLinkedList[] bucket = new SortLinkedList[arrayToSort.length];
 //        помещаем числа в соответствующие ведра для сортировки
+
         for (int element: arrayToSort){
-            int bucketNumber = (int) ((long) element * (long) arrayToSort.length/ (long) max);
+            int bucketNumber = (int) (((long) element * (long) arrayToSort.length)/ (long) max);
 //            Буду использовать свою реализацию list - SortLinkedList
             bucket[bucketNumber] = new SortLinkedList(element, bucket[bucketNumber]);
 //            сортируем числа внутри ведра. Если число больше следущего - двигаем вверх
             sortBucketElements(bucket[bucketNumber]);
-
         }
+
         //          Собираем элементы из бакетов обратно в массив
         int indexToInsert = 0;
         for (SortLinkedList list : bucket){
             while (list != null && list.value != null){
                 arrayToSort[indexToInsert++] = list.value;
-                list = list.nextValue;
+                list = list.next;
             }
         }
     }
 
     private static void sortBucketElements(SortLinkedList bucket) {
         SortLinkedList items = bucket;
-        while (items.nextValue != null){
-            if (items.value < items.nextValue.value){
+        while (items.next != null){
+            if (items.value < items.next.value){
                 break;
             }
             int x = items.value;
-            items.value = items.nextValue.value;
-            items.nextValue.value = x;
-            items = items.nextValue;
+            items.value = items.next.value;
+            items.next.value = x;
+            items = items.next;
         }
     }
 
