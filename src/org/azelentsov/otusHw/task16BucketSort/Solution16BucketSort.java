@@ -1,68 +1,61 @@
 package org.azelentsov.otusHw.task16BucketSort;
 
 import org.azelentsov.otusHw.common.BaseSort;
+import org.azelentsov.otusHw.common.SortLinkedList;
 
-import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.util.*;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Solution16BucketSort extends BaseSort {
 
-    private List<List<Integer>> buckets;
+    public Solution16BucketSort(int arrayLength) {
+        populateArray(arrayLength);
 
-    private int maxNumber;
-
-
-    public Solution16BucketSort(int length) {
-        populateArray(length);
-        maxNumber = arrayToSort[0];
-        for (int element: arrayToSort){
-            if (element > maxNumber){
-                maxNumber = element;
-            }
-        }
-        buckets = new ArrayList<>(length);
-        for (int i = 0; i <= length; i++){
-            buckets.add(new LinkedList<>());
-        }
     }
 
-    private int calculateBucketNumber(int number){
-        return number * arrayToSort.length/maxNumber;
-    }
-
-
-
-    @Override
     protected void sort() {
-//        Рассовываем элементы по ведрам
-        for (int element: arrayToSort){
-            int bucketNumber = calculateBucketNumber(element);
-            var currentBucket = buckets.get(bucketNumber);
-            if (currentBucket.size() == 0 ){
-                currentBucket.add(element);
-            } else {
-                int index = 0;
-                for (; index < currentBucket.size(); index++){
-                    if (element < currentBucket.get(index)){
-                        currentBucket.add(index, element);
-                        break;
-                    }
-                }
-                if (index == currentBucket.size()){
-                    currentBucket.add(element);
-                }
+//        находим максимальный элемент
+        int max = arrayToSort[0];
+        for (int a: arrayToSort){
+            if (a > max){
+                max = a;
             }
         }
-//        Собираем элементы из ведер в отсортированный массив
-        int position = 0;
-        for (var bucket: buckets){
-            for (int element: bucket){
-                arrayToSort[position++] = element;
+//        увеличиваем максильный элемент на 1 чтобы потом выполнять сразу деление
+        max++;
+        SortLinkedList[] bucket = new SortLinkedList[arrayToSort.length];
+//        помещаем числа в соответствующие ведра для сортировки
+        for (int element: arrayToSort){
+            int bucketNumber = (int) ((long) element * (long) arrayToSort.length/ (long) max);
+//            Буду использовать свою реализацию list - SortLinkedList
+            bucket[bucketNumber] = new SortLinkedList(element, bucket[bucketNumber]);
+//            сортируем числа внутри ведра. Если число больше следущего - двигаем вверх
+            sortBucketElements(bucket[bucketNumber]);
+
+        }
+        //          Собираем элементы из бакетов обратно в массив
+        int indexToInsert = 0;
+        for (SortLinkedList list : bucket){
+            while (list != null && list.value != null){
+                arrayToSort[indexToInsert++] = list.value;
+                list = list.nextValue;
             }
+        }
+    }
+
+    private static void sortBucketElements(SortLinkedList bucket) {
+        SortLinkedList items = bucket;
+        while (items.nextValue != null){
+            if (items.value < items.nextValue.value){
+                break;
+            }
+            int x = items.value;
+            items.value = items.nextValue.value;
+            items.nextValue.value = x;
+            items = items.nextValue;
         }
     }
 
