@@ -1,6 +1,7 @@
 package org.azelentsov.otusHw.task19BST;
 
 import org.azelentsov.otusHw.common.BaseSort;
+import org.azelentsov.otusHw.common.Node;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -11,15 +12,7 @@ public class Solution19BST extends BaseSort {
         populateArray(nodeNumbers);
     }
 
-    private class Node{
-        Node left, right;
-        int value;
 
-        public Node(int value) {
-            this.value = value;
-            left = right = null;
-        }
-    }
 
     private Node tree = null;
 
