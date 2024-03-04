@@ -55,51 +55,38 @@ public class Solution19BST extends BaseSort {
         return false;
     }
 
-    private boolean detectRight(Node parentNode, int valueToRemove){
-        return parentNode.right != null && parentNode.right.value == valueToRemove;
-    }
-    private boolean detectLeft(Node parentNode, int valueToRemove){
-        return parentNode.left != null && parentNode.left.value == valueToRemove;
+    private Node removeNode(Node node, int valueToRemove){
+        if (node == null) return node;
+        if (node.value > valueToRemove){
+            node.left = removeNode(node.left, valueToRemove);
+        }
+        else if (node.value < valueToRemove){
+            node.right = removeNode(node.right, valueToRemove);
+        }
+        else {
+            if (node.left == null)
+                return node.right;
+            if (node.right == null)
+                return node.left;
+//            находим минимальный элемент в правом поддереве
+            node.value = minValue(node.right);
+            node.right = removeNode(node.right, node.value);
+        }
+        return node;
     }
 
-    private void removeNode(Node currentNode, Node parentNode, int valueToRemove){
-        if (currentNode == null){
-            return;
-        }
-        if (currentNode.value == valueToRemove){
-//            В случае, если у нас у ноды нет потомков - удаляем ее у родителя
-            if (currentNode.left == null && currentNode.right == null){
-                if (detectRight(parentNode, valueToRemove)){
-                    parentNode.right = null;
-                }
-                if (detectLeft(parentNode, valueToRemove)){
-                    parentNode.left = null;
-                }
+    private int minValue(Node node){
+        int minValue = node.value;
+        while (node.left != null){
+            if (node.value < minValue){
+                minValue = node.value;
             }
-//            в случае, если у ноды есть один потомок - удаляем ноду и вставляем вместо нее нашу ноду
-            if (currentNode.left == null){
-                parentNode.right = currentNode.right;
-            }
-            if (currentNode.right == null) {
-                parentNode.left = currentNode.left;
-            }
-//            если у ноды есть два потомка - нужно определить, какой потомок встанет вместо удаляемой ноды
-//            if (detectRight(parentNode, valueToRemove)){
-//                if (currentNode.left >)
-//                parentNode.right =
-//            }
-//            если наша нода для удаления не найдена, то идем дальше
         }
-        if (currentNode.value > valueToRemove){
-            removeNode(currentNode.left, currentNode, valueToRemove);
-        }
-        if (currentNode.value < valueToRemove){
-            removeNode(currentNode.right, currentNode,valueToRemove);
-        }
+        return minValue;
     }
 
     public void remove(int x){
-           removeNode(tree, null, x);
+           removeNode(tree, x);
     }
 
     @Override
@@ -110,7 +97,7 @@ public class Solution19BST extends BaseSort {
         insert(30);
         insert(40);
         insert(5);
-//        insert(15);
+        insert(15);
         remove(5);
     }
 
