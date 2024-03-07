@@ -14,13 +14,13 @@ public class Solution19BST extends BaseSort {
 
 
 
-    private Node tree = null;
+    protected Node tree = null;
 
     public void insert(int x){
         tree = addNode(tree, x);
     }
 
-    private Node addNode(Node node, int keyToAdd){
+    protected Node addNode(Node node, int keyToAdd){
         if (node == null){
             return new Node(keyToAdd);
         }

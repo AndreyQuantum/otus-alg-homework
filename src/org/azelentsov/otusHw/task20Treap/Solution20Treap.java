@@ -7,22 +7,22 @@ import java.util.Random;
 
 public class Solution20Treap extends BaseSort {
 
+    private TreapNode tree;
+    private TreapNode t1;
+    private TreapNode t2;
+
     private class TreapNode{
-        public double y;
+        public double priority;
         public TreapNode left, right;
         public int value;
 
         public TreapNode(int value) {
             this.value = value;
-            left = right = null;
-            var yGenerator = new Random();
-            y = yGenerator.nextDouble();
+            priority = new Random().nextInt();
         }
     }
 
-    private TreapNode tree;
-    private TreapNode t1;
-    private TreapNode t2;
+
 
     public Solution20Treap(int nodeNumbers) {
         populateArray(nodeNumbers);
@@ -32,6 +32,7 @@ public class Solution20Treap extends BaseSort {
         if (t == null) return new TreapNode(x);
         if (t.value > x){
             t.left = insert(t.left, x);
+
         } else if (t.value < x){
             t.right = insert(t.right, x);
         }
@@ -49,14 +50,6 @@ public class Solution20Treap extends BaseSort {
         split(t.left,x);
     }
 
-    public void insert(int x){
-        if (tree == null){
-            tree = new TreapNode(x);
-        }
-        t1 = t2 = null;
-//        разделяем массив на два подмассива
-        split(tree, x);
-    }
 
     public static void main(String[] args) throws IOException {
 
