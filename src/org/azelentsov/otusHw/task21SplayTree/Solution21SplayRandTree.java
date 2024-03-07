@@ -84,7 +84,7 @@ class Solution21SplayRandTree extends Solution19BST {
     @Override
     public void insert(int x){
 //        Делаем вставку со splay только в случае, если у нас отработала формула
-        if (new Random().nextInt() % (arrayToSort.length +1) == 0){
+        if (new Random().nextInt() % 2 == 0){
             tree = insert(tree, x);
         } else {
             tree = addNode(tree, x);
