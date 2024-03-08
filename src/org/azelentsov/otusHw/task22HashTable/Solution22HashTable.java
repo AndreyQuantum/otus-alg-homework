@@ -14,7 +14,7 @@ public class Solution22HashTable implements BaseTask {
 
     private final int DEFAULT_SIZE = 10;
 
-
+    private int memberCount = 0;
     private int hashFactor = DEFAULT_SIZE;
 
     private ArrayList[] values = new ArrayList[DEFAULT_SIZE];
@@ -35,6 +35,7 @@ public class Solution22HashTable implements BaseTask {
                 values[i] = new ArrayList();
                 values[i].add(keyToPut);
                 values[i].add(objectToPut);
+                memberCount++;
                 return;
             }
         }
@@ -45,6 +46,7 @@ public class Solution22HashTable implements BaseTask {
             if (values[i].getFirst() == keyToDelete){
                 Object objectToDelete = values[i].get(1);
                 values[i] = null;
+                memberCount--;
                 return objectToDelete;
             }
         }
@@ -54,18 +56,18 @@ public class Solution22HashTable implements BaseTask {
     private int getPosition(String valueToHash){
         AtomicInteger hashCodeSum = new AtomicInteger();
         valueToHash.chars().forEach(hashCodeSum::addAndGet);
-        return hashCodeSum.get() % hashFactor;
+        return  hashCodeSum.get() % hashFactor;
     }
 
     private void rehash(){
-        if ( (float) Arrays.stream(values).count() / (float) hashFactor > loadFactor){
-            hashFactor *= 2;
-            var resultValues = new ArrayList[hashFactor];
+        if ( (float) memberCount / (float) hashFactor > loadFactor){
+            hashFactor = memberCount;
+            var resultValues = new ArrayList[memberCount*=2];
 //            Проходимся по каждому элементу и переоределяем его позицию в листе
             for (ArrayList element: values){
                 if (element != null){
                     int newPosition = getPosition((String) element.getFirst());
-                    for (int i = newPosition; i <= values.length; i++){
+                    for (int i = newPosition; i < values.length; i++){
                         if (resultValues[i] == null){
                             resultValues[i] = element;
                             break;
@@ -84,10 +86,9 @@ public class Solution22HashTable implements BaseTask {
     }
     public static void main(String[] args) {
         var objectToCheck = new Solution22HashTable();
-        objectToCheck.put("test1", "SomeObj1" );
-        objectToCheck.put("test2", "SomeObj2" );
-        objectToCheck.put("test3", "SomeObj3" );
-        objectToCheck.put("test101", "SomeObj101" );
+        for (int i = 0; i <= 100; i++){
+            objectToCheck.put("test" + i, "SomeObj" + i );
+        }
         System.out.println(objectToCheck.get("test101"));
         System.out.println(objectToCheck.delete("test101"));
         System.out.println(objectToCheck.get("test1"));
