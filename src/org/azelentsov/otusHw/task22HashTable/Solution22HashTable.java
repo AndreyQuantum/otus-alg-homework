@@ -4,6 +4,7 @@ import org.azelentsov.otusHw.common.BaseTask;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
 // Реализация hashTable. Ключи - String, Значения - генерик V.
@@ -80,6 +81,19 @@ public class Solution22HashTable implements BaseTask {
 
     }
 
+    public static String generateRandomString(int length) {
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        StringBuilder result = new StringBuilder();
+        Random random = new Random();
+
+        for (int i = 0; i < length; i++) {
+            int index = random.nextInt(characters.length());
+            result.append(characters.charAt(index));
+        }
+
+        return result.toString();
+    }
+
     @Override
     public String run(String inputCase) {
         return null;
@@ -87,7 +101,7 @@ public class Solution22HashTable implements BaseTask {
     public static void main(String[] args) {
         var objectToCheck = new Solution22HashTable();
         for (int i = 0; i <= 100; i++){
-            objectToCheck.put("test" + i, "SomeObj" + i );
+            objectToCheck.put(generateRandomString(10),  i );
         }
         System.out.println(objectToCheck.get("test101"));
         System.out.println(objectToCheck.delete("test101"));
