@@ -3,13 +3,26 @@ package org.azelentsov.otusHw.task22HashTable;
 import org.azelentsov.otusHw.common.BaseTask;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
 // Реализация hashTable. Ключи - String, Значения - генерик V.
 public class Solution22HashTable implements BaseTask {
 
+    private class HashElement{
+
+        public String key;
+        public Object value;
+        public boolean isDeleted;
+
+        public HashElement(String key, Object value) {
+            this.key = key;
+            this.value = value;
+            this.isDeleted = false;
+        }
+
+
+    }
 
     private final float loadFactor = 0.75F;
 
@@ -18,12 +31,12 @@ public class Solution22HashTable implements BaseTask {
     private int memberCount = 0;
     private int hashFactor = DEFAULT_SIZE;
 
-    private ArrayList[] values = new ArrayList[DEFAULT_SIZE];
+    private HashElement[] values = new HashElement[DEFAULT_SIZE];
 
     public Object get(String keyToGet){
         for (int i = getPosition(keyToGet); i <= values.length; i++){
-            if (values[i].getFirst() == keyToGet){
-                return values[i].get(1);
+            if (!values[i].isDeleted && values[i].key.equals(keyToGet)){
+                return values[i].value;
             }
         }
         return null;
@@ -32,10 +45,8 @@ public class Solution22HashTable implements BaseTask {
     public void put(String keyToPut, Object objectToPut){
         rehash();
         for (int i = getPosition(keyToPut); i < values.length; i++){
-            if (values[i] == null || values[i].getFirst() == keyToPut){
-                values[i] = new ArrayList();
-                values[i].add(keyToPut);
-                values[i].add(objectToPut);
+            if (values[i] == null || values[i].key.equals(keyToPut)){
+                values[i] = new HashElement(keyToPut, objectToPut);
                 memberCount++;
                 return;
             }
@@ -44,10 +55,11 @@ public class Solution22HashTable implements BaseTask {
 
     public Object delete(String keyToDelete){
         for (int i = getPosition(keyToDelete); i< values.length; i++){
-            if (values[i].getFirst() == keyToDelete){
-                Object objectToDelete = values[i].get(1);
-                values[i] = null;
-                memberCount--;
+            if (values[i].key.equals(keyToDelete)){
+                Object objectToDelete = values[i].value;
+                values[i].isDeleted = true;
+                values[i].value = null;
+                values[i].key = null;
                 return objectToDelete;
             }
         }
@@ -63,11 +75,11 @@ public class Solution22HashTable implements BaseTask {
     private void rehash(){
         if ( (float) memberCount / (float) hashFactor > loadFactor){
             hashFactor = memberCount;
-            var resultValues = new ArrayList[memberCount*=2];
+            HashElement[] resultValues = new HashElement[memberCount*=2];
 //            Проходимся по каждому элементу и переоределяем его позицию в листе
-            for (ArrayList element: values){
-                if (element != null){
-                    int newPosition = getPosition((String) element.getFirst());
+            for (HashElement element: values){
+                if (element != null && !element.isDeleted){
+                    int newPosition = getPosition(element.key);
                     for (int i = newPosition; i < values.length; i++){
                         if (resultValues[i] == null){
                             resultValues[i] = element;
