@@ -1,11 +1,26 @@
 package org.azelentsov.otusHw.task24TrieMap;
 
-public class Solution24TrieMap {
+import org.azelentsov.otusHw.common.BaseSort;
+
+import static org.azelentsov.otusHw.task22HashTable.Solution22HashTable.generateRandomString;
+
+public class Solution24TrieMap extends BaseSort {
     private final Node root;
+    private final String[] prefixesToManipulate;
 
-
-    public Solution24TrieMap() {
+    public Solution24TrieMap(int elementCount) {
         this.root = new Node();
+        populateArray(elementCount);
+        prefixesToManipulate = new String[elementCount];
+    }
+
+    @Override
+    protected void sort() {
+        for (String pr : prefixesToManipulate){
+            if (search(pr) == null){
+                throw new RuntimeException("Попытка искать несуществующий элемент!");
+            };
+        }
     }
 
     private class Node{
@@ -54,14 +69,16 @@ public class Solution24TrieMap {
     }
 
     public static void main(String[] args) {
-        var testObject = new Solution24TrieMap();
-        testObject.insert("aaa", '1');
-        testObject.insert("aaab", '2');
-        System.out.println(testObject.search("aaa"));
-        System.out.println(testObject.search("aaab"));
-        System.out.println(testObject.search("aaac"));
-        System.out.println(testObject.search("aacc"));
-        System.out.println(testObject.search("aa"));
+        System.out.println("Element count \t elapsed time");
+        for (int N = 10; N <= 1_000_000_000; N *= 10) {
+            var testObject = new Solution24TrieMap(N);
+            for (int i = 0; i< testObject.arrayToSort.length;i++){
+                var stringToInsert = generateRandomString(testObject.arrayToSort[i]);
+                testObject.insert(stringToInsert, testObject.arrayToSort[i]);
+                testObject.prefixesToManipulate[i] = stringToInsert;
+            }
+            testObject.run();
+        }
 //        System.out.println(testObject.startsWith("ac"));
 
     }
