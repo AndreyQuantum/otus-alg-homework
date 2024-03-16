@@ -17,6 +17,11 @@ public class PriorityQueue<T> {
         }
         array.get(priority).add(data);
     }
+
+    public boolean isElementsInQueue(int priority){
+        return array.get(priority).size() > 0;
+    }
+
     public T dequeue(int priority){
         if (array.size() == 0){
             return  null;
