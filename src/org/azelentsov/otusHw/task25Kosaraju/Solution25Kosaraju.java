@@ -35,13 +35,24 @@ public class Solution25Kosaraju implements BaseTask {
     private int[][] getInvertedGraph(int[][] graphToInv){
 //        создаем граф, который будем возвращать
         int[][] graphToReturn = new int[graphToInv.length][graphToInv.length];
-
-//        Переворачиваем направления графа, те транспонируем матрицу (меняем строки со столбцами)
-        for (int str = 0; str < graphToInv.length; str++){
-            for (int stlb = 0; stlb < graphToInv.length; stlb++){
-                graphToReturn[stlb][str] = graphToInv[str][stlb];
+        for (int[] arr: graphToReturn){
+            for (int i = 0; i < graphToReturn.length; i++){
+                arr[i] = -1;
             }
         }
+//        Переворачиваем направления графа, те транспонируем матрицу (меняем строки со столбцами)
+        for (int i = 0; i < graphToInv.length; i++){
+            for (int element: graphToInv[i]){
+                if (element >=0){
+                    for (int iGr = 0; i < graphToReturn[element].length; i++){
+                        if (graphToReturn[element][iGr] == -1){
+                            graphToReturn[element][iGr] = i;
+                            break;
+                        }
+                    }
+                }
+                }
+            }
         return graphToReturn;
     }
 
@@ -96,11 +107,12 @@ public class Solution25Kosaraju implements BaseTask {
 //                {0,0,0,0,1,0},
 //                {0,0,0,0,0,1},
 //                {0,0,0,0,0,0},
-                {1},
-                {2},
-                {0},
-                {4},
-                {5}
+                {1,-1,-1,-1,-1,-1},
+                {2,-1,-1,-1,-1,-1},
+                {0,-1,-1,-1,-1,-1},
+                {4,-1,-1,-1,-1,-1},
+                {5,-1,-1,-1,-1,-1},
+                {-1,-1,-1,-1,-1, -1}
         };
         var sol = new Solution25Kosaraju(graph);
         sol.run(null);
