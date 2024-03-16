@@ -22,25 +22,16 @@ public class Solution25Kosaraju implements BaseTask {
     }
     
     private int[][] getInvertedGraph(int[][] graphToInv){
-//        Вычисляем максимальную степень ребра для построения двухмерного массива инв. графа
-        int maxRebroPower = 0;
-        for (int[] element: graphToInv){
-            if (element.length > maxRebroPower){
-                maxRebroPower = element.length;
-            }
-        }
 //        создаем граф, который будем возвращать
-        int[][] graphToReturn = new int[graphToInv.length][maxRebroPower];
+        int[][] graphToReturn = new int[graphToInv.length][graphToInv.length];
 
-//        Переворачиваем направления графа
-        for (int i = 0; i < graphToInv.length; i++){
-            for (int element: graphToInv[i]){
-                for (int rebro: graphToReturn[element]){
-
-                }
-
+//        Переворачиваем направления графа, те транспонируем матрицу (меняем строки со столбцами)
+        for (int str = 0; str < graphToInv.length; str++){
+            for (int stlb = 0; stlb < graphToInv.length; stlb++){
+                graphToReturn[stlb][str] = graphToInv[str][stlb];
             }
         }
+        return graphToReturn;
     }
 
 
@@ -48,15 +39,17 @@ public class Solution25Kosaraju implements BaseTask {
     @Override
     public String run(String inputCase) {
 //       1. Инвертируем связи в графе
-        for (int[])
         return null;
     }
 
     public static void main(String[] args) {
         int[][] graph = {
-                {1},
-                {2},
-                {1}
+                {0,1,0,0,0,0},
+                {0,0,1,0,0,0},
+                {1,0,0,0,0,0},
+                {0,0,0,0,1,0},
+                {0,0,0,0,0,1},
+                {0,0,0,0,0,0},
         };
         var sol = new Solution25Kosaraju(graph);
     }
