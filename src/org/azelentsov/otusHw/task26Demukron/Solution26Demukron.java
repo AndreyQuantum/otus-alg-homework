@@ -43,8 +43,9 @@ public class Solution26Demukron implements BaseTask {
                     zero.add(u);
                 }
             }
-            if (zero.isEmpty()){
-                return "false";
+            if (zero.isEmpty()) {
+                System.out.println("Граф содержит циклы.");
+                return null; // Граф содержит циклы, алгоритм не применим
             }
             for (int u : zero){
                 result[level]+= 1;
@@ -58,7 +59,9 @@ public class Solution26Demukron implements BaseTask {
 
     private void recalculatePolustepen(int u) {
         for (int w = 0; w < graphCopy.length; w++){
-            polustepen[w] -= graph[u][w];
+            if (graph[u][w] >=0 && polustepen[w] >0){
+                polustepen[w] -= 1;
+            }
         }
     }
 
