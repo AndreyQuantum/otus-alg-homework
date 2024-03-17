@@ -3,7 +3,6 @@ package org.azelentsov.otusHw.task25Kosaraju;
 import org.azelentsov.otusHw.common.BaseTask;
 import org.azelentsov.otusHw.task05Arrays.src.model.PriorityQueue;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 
 public class Solution25Kosaraju implements BaseTask {
