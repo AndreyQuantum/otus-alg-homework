@@ -82,7 +82,7 @@ public class Solution25Kosaraju implements BaseTask {
     private void dfs2(int v){
         component[v] = comp_index;
         for (int uInd = 0; uInd < graph[v].length; uInd++){
-            if (component[graph[v][uInd]] < 0){
+            if (graph[v][uInd] >= 0 && component[graph[v][uInd]] < 0){
                 dfs2(graph[v][uInd]);
             }
         }
@@ -92,7 +92,7 @@ public class Solution25Kosaraju implements BaseTask {
     private void dfs1(int v) {
         visited[v] = true;
         for (int u = 0; u < invertedGraph[v].length; u++){
-            if (invertedGraph[v][u] > 0 && !visited[u]){
+            if (invertedGraph[v][u] >= 0 && !visited[u]){
                 dfs1(u);
             }
         }
@@ -100,13 +100,8 @@ public class Solution25Kosaraju implements BaseTask {
     }
 
     public static void main(String[] args) {
+//        -1 это несуществующая вершина
         int[][] graph = {
-//                {0,1,0,0,0,0},
-//                {0,0,1,0,0,0},
-//                {1,0,0,0,0,0},
-//                {0,0,0,0,1,0},
-//                {0,0,0,0,0,1},
-//                {0,0,0,0,0,0},
                 {1,-1,-1,-1,-1,-1},
                 {2,-1,-1,-1,-1,-1},
                 {0,-1,-1,-1,-1,-1},
