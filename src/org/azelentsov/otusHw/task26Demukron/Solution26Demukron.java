@@ -4,6 +4,10 @@ import org.azelentsov.otusHw.common.BaseTask;
 import org.azelentsov.otusHw.task05Arrays.src.model.PriorityQueue;
 import org.azelentsov.otusHw.task25Kosaraju.Solution25Kosaraju;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class Solution26Demukron implements BaseTask {
 
 
@@ -27,14 +31,35 @@ public class Solution26Demukron implements BaseTask {
     @Override
     public String run(String inputCase) {
         int level = 0;
+        int[] result = new int[graph.length];
         for (int i = 0; i < graph.length; i++){
             polustepen[i] = countNum(i);
             graphCopy[i] = graph[i];
         }
         while (graphCopy.length > 0){
-            for
+            List<Integer> zero = new ArrayList<>();
+            for (int u = 0; u < graphCopy.length; u++){
+                if (polustepen[u] == 0){
+                    zero.add(u);
+                }
+            }
+            if (zero.isEmpty()){
+                return "false";
+            }
+            for (int u : zero){
+                result[level]+= 1;
+                graphCopy[u] = null;
+                recalculatePolustepen(u);
+            }
+            level++;
         }
-        return null;
+        return Arrays.toString(result);
+    }
+
+    private void recalculatePolustepen(int u) {
+        for (int w = 0; w < graphCopy.length; w++){
+            polustepen[w] -= graph[u][w];
+        }
     }
 
     private int countNum(int num){
