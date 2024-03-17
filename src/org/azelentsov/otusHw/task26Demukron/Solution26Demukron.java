@@ -1,93 +1,78 @@
 package org.azelentsov.otusHw.task26Demukron;
 
-import org.azelentsov.otusHw.common.BaseTask;
-import org.azelentsov.otusHw.task05Arrays.src.model.PriorityQueue;
-import org.azelentsov.otusHw.task25Kosaraju.Solution25Kosaraju;
-
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
-public class Solution26Demukron implements BaseTask {
+public class Solution26Demukron {
 
-
-    private final int[][] graph;
-
-    private final PriorityQueue<Integer> queue;
-
-    private final int[] polustepen;
-
-    private int[][] graphCopy;
-
-    public Solution26Demukron(int[][] graph) {
-//        Инициализируем матрицу, список посещенных вершин и очередь для DFS поиска
-        this.graph = graph;
-//        реализовывал только priority queue, буду использовать всегда 1 приоритет
-        queue = new PriorityQueue<>();
-        polustepen = new int[graph.length];
-        graphCopy = new int[graph.length][graph.length];
-
-    }
-    @Override
-    public String run(String inputCase) {
-        int level = 0;
-        int[] result = new int[graph.length];
-        for (int i = 0; i < graph.length; i++){
-            polustepen[i] = countNum(i);
-            graphCopy[i] = graph[i];
+    public static int[][] demucron(int[][] A) {
+        int N = A.length;
+//        массив для хранения входящих степеней каждой вершины
+        int[] inDegree = new int[N];
+//        считаем степени всех вершин
+        for (int[] ints : A) {
+            for (int anInt : ints) {
+                inDegree[anInt]++;
+            }
         }
-        while (graphCopy.length > 0){
-            List<Integer> zero = new ArrayList<>();
-            for (int u = 0; u < graphCopy.length; u++){
-                if (polustepen[u] == 0){
-                    zero.add(u);
+
+//      ищем вершины с входящей полустепенью 0 и добавляем в очередь
+        LinkedList<Integer> queue = new LinkedList<>();
+        for (int i = 0; i < N; i++) {
+            if (inDegree[i] == 0) {
+                queue.add(i);
+            }
+        }
+
+        List<List<Integer>> levels = new ArrayList<>();
+        while (!queue.isEmpty()) {
+            List<Integer> level = new ArrayList<>();
+            LinkedList<Integer> nextQueue = new LinkedList<>();
+            while (!queue.isEmpty()) {
+//                берем нулевую вершину из очереди
+                int vertex = queue.remove();
+//                добавляем ее в текущий уровень
+                level.add(vertex);
+                for (int adjVertex : A[vertex]) {
+//                    уменьшаем степень вершин
+                    inDegree[adjVertex]--;
+//                    если степень вершины равна нулю после вычитания, то добавляем в следущую очередь
+                    if (inDegree[adjVertex] == 0) {
+                        nextQueue.add(adjVertex);
+                    }
                 }
             }
-            if (zero.isEmpty()) {
-                System.out.println("Граф содержит циклы.");
-                return null; // Граф содержит циклы, алгоритм не применим
-            }
-            for (int u : zero){
-                result[level]+= 1;
-                graphCopy[u] = null;
-                recalculatePolustepen(u);
-            }
-            level++;
+            levels.add(level);
+            queue = nextQueue;
         }
-        return Arrays.toString(result);
-    }
 
-    private void recalculatePolustepen(int u) {
-        for (int w = 0; w < graphCopy.length; w++){
-            if (graph[u][w] >=0 && polustepen[w] >0){
-                polustepen[w] -= 1;
-            }
+        // Преобразование списка уровней в требуемый формат int[][]
+        int[][] levelsArray = new int[levels.size()][];
+        for (int i = 0; i < levels.size(); i++) {
+            levelsArray[i] = levels.get(i).stream().mapToInt(Integer::intValue).toArray();
         }
-    }
 
-    private int countNum(int num){
-        int sum = 0;
-        for (int[] row : graph){
-            for (int i : row){
-                if (i == num){
-                    sum++;
-                }
-            }
-        }
-        return sum;
+        return levelsArray;
     }
 
     public static void main(String[] args) {
-//        -1 это несуществующая вершина
-        int[][] graph = {
-                {2,-1,-1,-1,-1,-1},
-                {2, 5,-1,-1,-1,-1},
-                {3,-1,-1,-1,-1,-1},
-                {4,-1,-1,-1,-1,-1},
-                {-1,-1,-1,-1,-1,-1},
-                {3,-1,-1,-1,-1, -1}
+        // Пример графа в виде вектора смежности
+        int[][] A = {
+                {1, 2},    // Вершина 0 смежна с 1 и 2
+                {3},       // Вершина 1 смежна с 3
+                {3},       // Вершина 2 смежна с 3
+                {}         // Вершина 3 без смежных вершин
         };
-        var sol = new Solution26Demukron(graph);
-        sol.run(null);
+
+        int[][] levels = demucron(A);
+        for (int i = 0; i < levels.length; i++) {
+            System.out.print("Уровень " + i + ": ");
+            for (int vertex : levels[i]) {
+                System.out.print(vertex + " ");
+            }
+            System.out.println();
+        }
     }
+
 }
