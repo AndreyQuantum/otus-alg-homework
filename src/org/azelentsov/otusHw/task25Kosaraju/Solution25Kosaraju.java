@@ -40,7 +40,7 @@ public class Solution25Kosaraju implements BaseTask {
                 arr[i] = -1;
             }
         }
-//        Переворачиваем направления графа, те транспонируем матрицу (меняем строки со столбцами)
+//        Переворачиваем направления графа
         for (int i = 0; i < graphToInv.length; i++){
             for (int element: graphToInv[i]){
                 if (element >=0){
