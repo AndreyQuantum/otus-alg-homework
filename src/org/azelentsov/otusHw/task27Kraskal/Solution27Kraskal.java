@@ -26,7 +26,7 @@ public class Solution27Kraskal {
         resultGraph = new long[graph.length][graph.length];
     }
 
-    public long[][] run(){
+    public long[] run(){
 //       2.1 добавляем все вершины графа в лист
         for (int i = 0; i < graph.length; i++) {
             for (int r = 0; r < graph[i].length; r++) {
@@ -41,7 +41,18 @@ public class Solution27Kraskal {
             addMinR();
             rCount++;
         }
-        return resultGraph;
+        long[] edges = new long[rCount];
+        int e = 0;
+        for (int i = 0; i < resultGraph.length; i++){
+            for (int r = 0; r < resultGraph[i].length; r++){
+                if (resultGraph[i][r] != 0){
+                    int[] costAndNumber = readInt(resultGraph[i][r]);
+                    edges[++e] = writeInt(i,costAndNumber[0]);
+                }
+                }
+            }
+
+        return edges;
     }
 
     private void addMinR() {
