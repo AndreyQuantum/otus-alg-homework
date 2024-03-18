@@ -27,5 +27,35 @@ public class DisjointUnion {
         int rootX = find(x);
         int rootY = find(y);
 
+        if (rootX != rootY) {
+            if (rank[rootX] < rank[rootY]){
+                parent[rootX] = rootY;
+            } else if (rank[rootX] > rank[rootY]){
+                parent[rootY] = rootX;
+            } else {
+                parent[rootY] = rootX;
+                rank[rootX] = rank[rootX]+1;
+            }
+        }
+    }
+
+    public boolean isConnected(int x, int y) {
+        return find(x) == find(y);
+    }
+
+    public static void main(String[] args) {
+        DisjointUnion dsu = new DisjointUnion(10); // Создаем DSU для 10 элементов
+
+        // Соединяем некоторые элементы
+        dsu.union(1, 2);
+        dsu.union(2, 3);
+        dsu.union(4, 5);
+        dsu.union(6, 7);
+        dsu.union(5, 6);
+
+        // Проверяем, находятся ли элементы в одном множестве
+        System.out.println(dsu.isConnected(1, 3)); // true
+        System.out.println(dsu.isConnected(1, 4)); // false
+        System.out.println(dsu.isConnected(4, 7)); // true
     }
 }
