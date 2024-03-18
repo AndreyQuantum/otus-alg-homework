@@ -34,21 +34,7 @@ public class Solution27Kraskal {
             }
         }
 //       2.2 Сортируем ребра от каждой вершины по весу от меньшего к большему
-        for (int i = 0; sortedR.size() > 1 && i < sortedR.size() -1; i++){
-
-//                Делаем пока что bubble sort
-//                TODO: сделать quicksort
-                int currentEl =  readInt(sortedR.get(i)[1])[1];
-                int nextEl =readInt(sortedR.get(i+1)[1])[1];
-                if (currentEl > nextEl){
-                    long[] next = sortedR.get(i+1);
-                    sortedR.remove(i+1);
-                    sortedR.remove(i);
-                    sortedR.add(i+1, sortedR.get(i));
-                    sortedR.add(i, next);
-
-            }
-        }
+        quickSort(sortedR,0, sortedR.size() - 1);
         int rCount = 0;
 //        Добавляем ребра в новый граф, пока условие не выполнится
         while (rCount <= resultGraph.length -1){
@@ -77,6 +63,39 @@ public class Solution27Kraskal {
         }
     }
 
+        public static void quickSort(ArrayList<long[]> list, int low, int high) {
+            if (low < high) {
+                int pi = partition(list, low, high);
+
+                quickSort(list, low, pi - 1);
+                quickSort(list, pi + 1, high);
+            }
+        }
+
+        private static int partition(ArrayList<long[]> list, int low, int high) {
+            long[] pivot = list.get(high);
+            int i = (low - 1); // Index of smaller element
+
+            for (int j = low; j < high; j++) {
+                // If current element is smaller than the pivot
+                long[] current = list.get(j);
+                if (readInt(current[1])[1] < readInt(pivot[1])[1]) {
+                    i++;
+
+                    // swap list[i] and list[j]
+                    long[] temp = list.get(i);
+                    list.set(i, list.get(j));
+                    list.set(j, temp);
+                }
+            }
+
+            // swap list[i+1] and list[high] (or pivot)
+            long[] temp = list.get(i + 1);
+            list.set(i + 1, list.get(high));
+            list.set(high, temp);
+
+            return i + 1;
+        }
 
     //    функции для упаковки 2 int в один long
     public static long writeInt(int a, int b){
