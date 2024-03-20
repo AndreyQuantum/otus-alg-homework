@@ -28,7 +28,7 @@ public class Solution20Treap extends BaseSort {
         populateArray(nodeNumbers);
     }
 
-    private TreapNode insert(TreapNode t, int x){
+    public TreapNode insert(TreapNode t, int x){
         if (t == null) return new TreapNode(x);
         if (t.value > x){
             t.left = insert(t.left, x);
@@ -39,7 +39,7 @@ public class Solution20Treap extends BaseSort {
         return t;
     }
 
-    private void split(TreapNode t, int x){
+    public void split(TreapNode t, int x){
         if (t == null) return;
         if (t.value > x){
             insert(t1, x);
