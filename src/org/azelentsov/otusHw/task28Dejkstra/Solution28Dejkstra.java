@@ -5,13 +5,10 @@ import java.util.ArrayList;
 
 public class Solution28Dejkstra {
 
-    private long[][] graph;
+    private final long[][] graph;
 
 
-    private long[][] resultGraph;
-
-    private Node[] vertexes;
-    private ArrayList<long[]> sortedR;
+    private final Node[] vertexes;
 
     private class Node{
         public int cost = Integer.MAX_VALUE;
@@ -22,9 +19,9 @@ public class Solution28Dejkstra {
 
     public Solution28Dejkstra(long[][] graph) {
         this.graph = graph;
-        sortedR = new ArrayList<>();
+        ArrayList<long[]> sortedR = new ArrayList<>();
         //        1. Создаем граф и переносим все его вершины
-        resultGraph = new long[graph.length][graph.length];
+        long[][] resultGraph = new long[graph.length][graph.length];
         vertexes = new Node[graph.length];
     }
 
@@ -38,7 +35,7 @@ public class Solution28Dejkstra {
         return new int[]{a,(int) (l)};
     }
 
-    private void run() {
+    private long[] run() {
 //        0. Подготавливаем объекты с вершинами. Индексом ноды будет являться номер вершины.
 //        в качестве начальной вершины будет 0
         for (int i = 1; i < vertexes.length; i++){
@@ -67,7 +64,15 @@ public class Solution28Dejkstra {
 //            помечаем вершину как известную
             vertexes[lv].known = true;
         }
-
+//        Формируем результат - записываем его в результатирующую матрицу
+        long[] result = new long[graph.length];
+        for (int i = 0; i < vertexes.length; i++){
+            int previousHop = vertexes[i].previousHop;
+            if (previousHop != -1){
+                result[i] = writeInt(i, previousHop);
+            }
+        }
+        return result;
     }
     private int getLowestCostNode(){
         int lowerCostNodeIndex = 1;
