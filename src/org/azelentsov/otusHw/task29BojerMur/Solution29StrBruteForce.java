@@ -24,7 +24,7 @@ public class Solution29StrBruteForce {
 
     public static void main(String[] args) {
 
-        System.out.print(Solution29StrBruteForce.run("abcd", "abcaaaabcabcdaa"));
+        System.out.print(Solution29StrBruteForce.run("abcd", "abcbasdbasdijabcababddabcadabcdabc"));
 
     }
 

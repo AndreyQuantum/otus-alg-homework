@@ -16,7 +16,7 @@ public class Solution29PrefixShift {
         Arrays.fill(allChars, pattern.length());
 //        для букв из паттерна заполняем таблицу сдвига в обратном порядке
         for (int i = 0; i < pattern.length() -1; i++){
-            allChars[pattern.charAt(i)] = i + 1;
+            allChars[pattern.charAt(i)] = pattern.length() - i;
         }
     }
 
@@ -26,11 +26,13 @@ public class Solution29PrefixShift {
         for (int t = 0; t < text.length(); t++){
 //            Если символ нашего текста не совпадает с символом шаблона
             if (i == pattern.length() -1){
-                return t - pattern.length() + 1;
+                return t - i -1;
             }
-            if (text.charAt(t) != pattern.charAt(++i)){
+            char cur = pattern.charAt(++i);
+            if (text.charAt(t) != cur){
 //                то сдвигаем индекс на колл-во символов из таблицы сдвига
-                t += allChars[pattern.charAt(i)];
+                t +=  allChars[cur];
+                i = 0;
             }
         }
         return -1;
