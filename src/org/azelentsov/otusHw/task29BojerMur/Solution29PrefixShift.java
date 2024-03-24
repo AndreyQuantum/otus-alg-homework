@@ -24,16 +24,16 @@ public class Solution29PrefixShift {
 
         int i = 0;
         for (int t = 0; t < text.length(); t++){
-//            Если символ нашего текста не совпадает с символом шаблона
-            if (i == pattern.length() -1){
-                return t - i -1;
-            }
-            char cur = pattern.charAt(++i);
-            if (text.charAt(t) != cur){
+//            Если символ нашего текста не совпадает с символом шаблон
+            if (text.charAt(t) != pattern.charAt(i)){
 //                то сдвигаем индекс на колл-во символов из таблицы сдвига
-                t +=  allChars[cur];
+                i +=  allChars[pattern.charAt(i)];
                 i = 0;
             }
+            if (i == pattern.length() -1){
+                return t - i;
+            }
+            i++;
         }
         return -1;
     }
@@ -41,7 +41,7 @@ public class Solution29PrefixShift {
     public static void main(String[] args) {
         var pattern = new Solution29PrefixShift("abcd");
         long startTime = System.currentTimeMillis();
-        System.out.println(pattern.run("abcbasdbasdijabcababddabcadabcdabc"));
+        System.out.println(pattern.run("aaaaabababcd"));
         long endTime = System.currentTimeMillis();
         System.out.println("Excecution Time: " + Long.toString(endTime-startTime));
 

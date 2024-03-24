@@ -6,26 +6,23 @@ public class Solution29StrBruteForce {
     }
 
     public static int run(String pattern, String text) {
-        long startTime = System.nanoTime();
-        int patternIndex = 0;
+        int pi = 0;
         for (int t = 0; t < text.length(); t++){
-            if (text.charAt(t) != pattern.charAt(++patternIndex)) {
-                patternIndex = 0;
-            } else if (patternIndex == pattern.length() -1){
-                long endTime = System.nanoTime();
-                System.out.println("\nExcecution Time: " + Long.toString(endTime-startTime));
-                return t - pattern.length() + 1;
+            if (text.charAt(t) != pattern.charAt(++pi)) {
+                pi = 0;
+            } else if (pi == pattern.length() - 1){
+                return t - pattern.length();
             }
         }
-        long endTime = System.nanoTime();
-        System.out.println("\nExcecution Time: " + Long.toString(endTime-startTime));
         return -1;
     }
 
     public static void main(String[] args) {
+        long startTime = System.nanoTime();
 
-        System.out.print(Solution29StrBruteForce.run("abcd", "abcbasdbasdijabcababddabcadabcdabc"));
-
+        System.out.print(Solution29StrBruteForce.run("abcd", "aaaaabababcd"));
+        long endTime = System.nanoTime();
+        System.out.println("\nExcecution Time: " + Long.toString(endTime-startTime));
     }
 
 
