@@ -20,7 +20,7 @@ public class Solution29StrBruteForce {
     public static void main(String[] args) {
         long startTime = System.nanoTime();
 
-        System.out.print(Solution29StrBruteForce.run("abcd", "aaaaabababcd"));
+        System.out.print(Solution29StrBruteForce.run("abcd", "adrewvababasdavaboekdajabcdaoaksdqw"));
         long endTime = System.nanoTime();
         System.out.println("\nExcecution Time: " + Long.toString(endTime-startTime));
     }

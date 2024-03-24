@@ -14,35 +14,32 @@ public class Solution29PrefixShift {
         allChars = new int[128];
         //        заполняем таблицу сдвига
         Arrays.fill(allChars, pattern.length());
-//        для букв из паттерна заполняем таблицу сдвига в обратном порядке
-        for (int i = 0; i < pattern.length() -1; i++){
-            allChars[pattern.charAt(i)] = pattern.length() - i;
+//        для букв из паттерна заполняем таблицу сдвига в обратном порядке кроме последнего элемента
+        for (int i = 0; i < pattern.length() - 1; i++){
+            allChars[pattern.charAt(i)] = pattern.length() - i -1;
         }
     }
 
     public int run(String text){
-
-        int i = 0;
-        for (int t = 0; t < text.length(); t++){
-//            Если символ нашего текста не совпадает с символом шаблон
-            if (text.charAt(t) != pattern.charAt(i)){
-//                то сдвигаем индекс на колл-во символов из таблицы сдвига
-                i +=  allChars[pattern.charAt(i)];
-                i = 0;
+        int patC = pattern.length() -1;
+        for (int i = pattern.length() -1; i >= 0; i--){
+            if (pattern.charAt(patC) != text.charAt(i)){
+                i+= allChars[text.charAt(i)];
+                patC = pattern.length() -1;
             }
-            if (i == pattern.length() -1){
-                return t - i;
+            if (patC == 0){
+                return i -1;
             }
-            i++;
+            patC--;
         }
         return -1;
     }
 
     public static void main(String[] args) {
         var pattern = new Solution29PrefixShift("abcd");
-        long startTime = System.currentTimeMillis();
-        System.out.println(pattern.run("aaaaabababcd"));
-        long endTime = System.currentTimeMillis();
+        long startTime = System.nanoTime();
+        System.out.println(pattern.run("adrewvababasdavaboekdajabcdaoaksdqw"));
+        long endTime = System.nanoTime();
         System.out.println("Excecution Time: " + Long.toString(endTime-startTime));
 
     }
