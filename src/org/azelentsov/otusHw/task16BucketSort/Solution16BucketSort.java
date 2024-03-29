@@ -8,8 +8,7 @@ import java.io.IOException;
 public class Solution16BucketSort extends BaseSort {
 
     public Solution16BucketSort(int arrayLength) {
-        populateArray(arrayLength, 999);
-
+        populateArray(arrayLength, arrayLength);
     }
 
     protected void sort() {
